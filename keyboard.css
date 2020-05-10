@@ -1,0 +1,102 @@
+#keyboard {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 1vh;
+    right: 0;
+    width: 100vw;
+    height: 30vh;
+}
+
+#L,
+#S,
+#Space,
+#Control {
+    position: absolute;
+    bottom: 6vh;
+    width: 8vh;
+    height: 8vh;
+    border-radius: 50%;
+    background-color: red;
+    font-size: 7vh;
+    line-height: 8vh;
+    text-align: center;
+}
+
+#S,
+#L {
+    background-color: rgb(100, 130, 160);
+    bottom: 20vh;
+    border-radius: 2vh;
+    color: white;
+    border: outset;
+}
+
+#S {
+    left: 24vh;
+}
+
+#L {
+    left: 36vh;
+}
+
+#Space {
+    left: 8vh;
+}
+
+#Control {
+    left: 24vh;
+}
+
+#ArrowLeft,
+#ArrowRight,
+#ArrowUp,
+#ArrowDown {
+    position: absolute;
+    height: 8vh;
+    width: 8vh;
+    font-size: 8vh;
+    line-height: 8vh;
+    bottom: 6vh;
+}
+
+#Pause {
+    position: absolute;
+    display: inline-block;
+    left: 8vh;
+    bottom: 20vh;
+    width: 2vh;
+    height: 7vh;
+    border-left: 3vh black solid;
+    border-right: 3vh black solid;
+    /* background-color: rgb(100, 130, 156);
+    color: white; */
+}
+
+#Pause.Resume {
+    position: absolute;
+    display: inline-block;
+    left: 8vh;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent transparent transparent black;
+    border-width: 4vh;
+}
+
+#ArrowRight {
+    right: 8vh;
+}
+
+#ArrowDown {
+    right: 18vh;
+}
+
+#ArrowLeft {
+    right: 28vh;
+}
+
+#ArrowUp {
+    right: 18vh;
+    bottom: 18vh;
+}

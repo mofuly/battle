@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battle City</title>
+    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./score.css">
+    <link rel="stylesheet" href="./keyboard.css">
+</head>
+
+<body>
+    <div class="main">
+        <div class="panel-resource">
+            <div class="images">
+                <img src="./res/1P.gif" alt="" id="img1p">
+                <img src="./res/brick.gif" alt="" id="imgBrick">
+                <img src="./res/steel.gif" alt="" id="imgSteel">
+                <img src="./res/grass.gif" alt="" id="imgGrass">
+                <img src="./res/ice.gif" alt="" id="imgIce">
+                <img src="./res/river-horizontal.gif" id="imgRiver">
+                <img src="./res/100.gif" id="imgScore100">
+                <img src="./res/200.gif" id="imgScore200">
+                <img src="./res/300.gif" id="imgScore300">
+                <img src="./res/400.gif" id="imgScore400">
+                <img src="./res/500.gif" id="imgScore500">
+                <img src="./res/big-gameover.gif" alt="" id="imgGameOver">
+                <img src="./res/bullet0.gif" id="imgBullet0">
+                <img src="./res/bullet1.gif" id="imgBullet1">
+                <img src="./res/bullet2.gif" id="imgBullet2">
+                <img src="./res/bullet3.gif" id="imgBullet3">
+                <img src="./res/bumb1.gif" class="imgBoom">
+                <img src="./res/bumb2.gif" class="imgBoom">
+                <img src="./res/bumb3.gif" class="imgBoom">
+                <img src="./res/camp0.gif" class="imgCamp">
+                <img src="./res/camp1.gif" class="imgCamp">
+                <img src="./res/enemytank-ico.gif" alt="" id="imgEnemyIco">
+                <img src="./res/playertank-ico.gif" alt="" id="imgPlayerIco">
+                <img src="./res/flag.gif" alt="" id="imgFlag">
+                <img src="./res/shield0.gif" id="imgShield0">
+                <img src="./res/shield1.gif" id="imgShield1">
+                <img src="./res/star0.gif" class="imgStar">
+                <img src="./res/star1.gif" class="imgStar">
+                <img src="./res/star2.gif" class="imgStar">
+                <img src="./res/star3.gif" class="imgStar">
+                <img src="./res/stage.gif" alt="" id="imgStage">
+                <img src="./res/black-number.gif" alt="" id="imgBlackNumber">
+                <img src="./res/yellow-number.gif" alt="" id="imgYellowNumber">
+                <img src="./res/white-number.gif" alt="" id="imgWhiteNumber">
+                <img src="./res/prop/p1.gif" class="imgProperty">
+                <img src="./res/prop/p2.gif" class="imgProperty">
+                <img src="./res/prop/p3.gif" class="imgProperty">
+                <img src="./res/prop/p4.gif" class="imgProperty">
+                <img src="./res/prop/p5.gif" class="imgProperty">
+                <img src="./res/prop/p6.gif" class="imgProperty">
+                <img src="./res/blast/0.gif" class="imgBigBoom">
+                <img src="./res/blast/1.gif" class="imgBigBoom">
+                <img src="./res/blast/2.gif" class="imgBigBoom">
+                <img src="./res/blast/3.gif" class="imgBigBoom">
+                <img src="./res/blast/4.gif" class="imgBigBoom">
+                <div class="player"></div>
+                <div class="enemy"></div>
+                <div class="red-enemy"></div>
+            </div>
+            <div class="sounds">
+                <audio src="./music/addlife.wav" id="avAddLife"></audio>
+                <audio src="./music/blast.wav" id="avBoom"></audio>
+                <audio src="./music/bonus1000.wav" id="avBonus1000"></audio>
+                <audio src="./music/camp-bomb.wav" id="avCampBoom"></audio>
+                <audio src="./music/enemy-bomb.wav" id="avEnemyBoom"></audio>
+                <audio src="./music/game-over.wav" id="avGameOver"></audio>
+                <audio src="./music/get-prop.wav" id="avEat"></audio>
+                <audio src="./music/hitHeavy.wav" id="avHitHeavy"></audio>
+                <audio src="./music/hitHeavy-1.wav" id="avHitHeavy1"></audio>
+                <audio src="./music/pause.wav" id="avPause"></audio>
+                <audio src="./music/player-bomb.wav" id="avPlayerBoom"></audio>
+                <audio src="./music/prop-out.wav" id="avOut"></audio>
+                <audio src="./music/scorepanel-di.wav" id="avDi"></audio>
+                <audio src="./music/shoot.wav" id="avFire"></audio>
+                <audio src="./music/start.wav" id="avStart"></audio>
+            </div>
+        </div>
+        <div id="panelBackground" class="panel-background">
+            <div class="vline"></div>
+        </div>
+        <div id="panelSidebar" class="panel-sidebar">
+            <div id="playerCount"></div>
+            <div id="stageNo"></div>
+        </div>
+        <canvas id="canvasMap" class="canvas-map"></canvas>
+        <canvas id="canvasEnemy" class="canvas-enemy"></canvas>
+        <canvas id="canvasPlayer" class="canvas-player"></canvas>
+        <canvas id="canvasBullet" class="canvas-bullet"></canvas>
+        <canvas id="canvasGrass" class="canvas-grass"></canvas>
+        <canvas id="canvasProperty" class="canvas-property"></canvas>
+        <canvas id="canvasExplosion" class="canvas-explosion"></canvas>
+        <canvas id="canvasShield" class="canvas-shield"></canvas>
+        <div id="panelCommon" class="panel-common"></div>
+        <div id="panelScore" class="panel-score"></div>
+        <div class="panel-cover">2020.05  英年早肥</div>
+        <div id="keyboard"></div>
+    </div>
+    <script src="./js/config.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/map.js"></script>
+    <script src="./js/queue.js"></script>
+    <script src="./js/keyboard.js"></script>
+    <script src="./js/bullet.js"></script>
+    <script src="./js/tank.js"></script>
+    <script src="./js/explosion.js"></script>
+    <script src="./js/property.js"></script>
+    <script src="./js/bullet.js"></script>
+    <script src="./js/battle.js"></script>
+    <script>
+
+    </script>
+</body>
+
+</html>

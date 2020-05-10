@@ -1,0 +1,144 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.panel-resource,
+.panel-background,
+.panel-sidebar,
+.canvas-map,
+.canvas-enemy,
+.canvas-player,
+.canvas-explosion,
+.canvas-bullet,
+.canvas-grass,
+.canvas-property,
+.panel-score,
+.canvas-shield,
+.panel-common,
+.panel-cover {
+    width: 512px;
+    height: 480px;
+    position: absolute;
+}
+
+.main {
+    width: 512px;
+    height: 480px;
+    margin: 0 auto;
+    margin-top: 8px;
+}
+
+.panel-background {
+    background-color: black;
+    box-sizing: border-box;
+    border: 32px solid grey;
+    border-right-width: 16px;
+}
+
+.panel-background>.vline {
+    position: absolute;
+    height: 442px;
+    width: 48px;
+    right: 0;
+    background-color: grey;
+}
+
+.panel-cover {
+    box-sizing: border-box;
+    font-size: 12px;
+    color: rgb(88, 88, 88);
+    text-align: right;
+    padding-top: 460px;
+    padding-right: 8px;
+}
+
+#playerCount,
+#stageNo {
+    position: absolute;
+    height: 16px;
+    display: inline-block;
+    text-align: right;
+    line-height: 16px;
+    color: black;
+    right: 16px;
+    font-size: 16px;
+    font-weight: bolder;
+}
+
+#playerCount {
+    width: 16px;
+    top: 288px;
+}
+
+#stageNo {
+    width: 32px;
+    height: 32px;
+    top: 390px;
+    font-size: 32px;
+    line-height: 32px;
+}
+
+.welcome {
+    position: absolute;
+    width: calc(512px);
+    height: calc(480px);
+    background-image: url('./res/select_player.gif');
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.black-ground {
+    background-color: black;
+    overflow: hidden;
+}
+
+.transparent-message,
+.message {
+    position: absolute;
+    width: 512px;
+    height: 480px;
+    font-size: 56px;
+    line-height: 480px;
+    text-align: center;
+    color: red;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.message {
+    background-color: grey;
+    color: black;
+}
+
+.gameover {
+    position: absolute;
+    width: 124px;
+    height: 80px;
+    left: 146px;
+    background-repeat: no-repeat;
+}
+
+.half-transparent {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.menu-tank {
+    position: absolute;
+    background-image: url('res/0Player/m1-3-1.gif');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+    top: 244px;
+    left: 140px;
+}
+
+#menuDescription {
+    position: absolute;
+    height: 16px;
+    font-size: 16px;
+    text-align: center;
+    bottom: 8px;
+    left: 60px;
+    color: white;
+}
