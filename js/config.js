@@ -24,7 +24,7 @@ config = {
     isLoading: false,
     isDelayForScore: false,
     isGameOver: false,
-    isDebugging: true
+    isDebugging: false
 };
 panel = {
     panelCommon: document.getElementById('panelCommon')
