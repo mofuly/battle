@@ -3,19 +3,20 @@
  */
 function Property(type) {
     this.type = type;
-    this.size = 32;
+    this.size = 16;
     this.ctx = canvasProperty.getContext('2d');
     do {
         row = genRandom(3, 22), col = genRandom(3, 22);
     } while (config.property.some(function (v) {
-            return collide(v.x, v.y, v.size, v.size, col * 16, row * 16, v.size, v.size);
+            return collide(v.x, v.y, v.size, v.size, col * 8, row * 8, v.size, v.size);
         }));
-    this.x = col * 16;
-    this.y = row * 16;
+    this.x = col * 8;
+    this.y = row * 8;
     this.img = document.querySelectorAll('.imgProperty')[this.type - 1];
     this.tick = 0;
     this.isPaused = false;
     this.isEatten = false;
+    this.isDestroyed = false;
     this.toggle = true;
     config.property.push(this);
 
@@ -27,8 +28,8 @@ Property.prototype = {
     constructor: Property,
 
     get location() {
-        var row = Math.floor(this.y / 16),
-            col = Math.floor(this.x / 16);
+        var row = Math.floor(this.y / 8),
+            col = Math.floor(this.x / 8);
         return [{
                 row: row,
                 col: col
@@ -59,17 +60,19 @@ Property.prototype = {
             elapsed = 0,
             self = this;
 
+        if (this.isDestroyed) return;
+
         if (this.isPaused) {
             requestAnimationFrame(this.show.bind(this));
             return;
         }
         if (config.isGameOver) {
-            self.ctx.clearRect(self.x + 32, self.y + 32, self.size, self.size);
+            self.ctx.clearRect(self.x + 16, self.y + 16, self.size, self.size);
             return;
         }
 
         if (this.isEatten) {
-            this.ctx.clearRect(self.x + 32, self.y + 32, self.size, self.size);
+            this.ctx.clearRect(self.x + 16, self.y + 16, self.size, self.size);
             var self = this;
             config.property = config.property.filter(function (v) {
                 return v !== self;
@@ -79,7 +82,7 @@ Property.prototype = {
 
         elapsed = Math.floor(this.tick / period);
         if (elapsed > duration + durationOfFast) {
-            this.ctx.clearRect(this.x + 32, this.y + 32, this.size, this.size);
+            this.ctx.clearRect(this.x + 16, this.y + 16, this.size, this.size);
             var self = this;
             config.property = config.property.filter(function (v) {
                 return v !== self;
@@ -89,10 +92,10 @@ Property.prototype = {
 
         if (elapsed <= duration) {
             if (this.tick % period === 0) {
-                this.ctx.drawImage(self.img, self.x + 32, self.y + 32, self.size, self.size);
+                this.ctx.drawImage(self.img, self.x + 16, self.y + 16, self.size, self.size);
             }
             if (this.tick % (3 * period) === 0) {
-                this.ctx.clearRect(self.x + 32, self.y + 32, self.size, self.size);
+                this.ctx.clearRect(self.x + 16, self.y + 16, self.size, self.size);
             }
         } else {
             if (this.tick % periodOfFast === 0) {
@@ -105,9 +108,9 @@ Property.prototype = {
 
         function twinkle() {
             if (self.toggle) {
-                self.ctx.drawImage(self.img, self.x + 32, self.y + 32, self.size, self.size);
+                self.ctx.drawImage(self.img, self.x + 16, self.y + 16, self.size, self.size);
             } else {
-                self.ctx.clearRect(self.x + 32, self.y + 32, self.size, self.size);
+                self.ctx.clearRect(self.x + 16, self.y + 16, self.size, self.size);
             }
             self.toggle = !self.toggle;
         }
@@ -126,12 +129,12 @@ Property.prototype = {
             for (let i = 23; i <= 25; i++) {
                 for (let j = 11; j <= 14; j++) {
                     if (config.map[i][j] === 'c') continue;
-                    x = j * 16, y = i * 16;
-                    ctx.clearRect(x + 32, y + 32, 16, 16);
+                    x = j * 8, y = i * 8;
+                    ctx.clearRect(x + 16, y + 16, 8, 8);
                     if (block === '5') {
-                        ctx.drawImage(imgSteel, x + 32, y + 32, 16, 16);
+                        ctx.drawImage(imgSteel, x + 16, y + 16, 8, 8);
                     } else {
-                        ctx.drawImage(imgBrick, x + 32, y + 32, 16, 16);
+                        ctx.drawImage(imgBrick, x + 16, y + 16, 8, 8);
                     }
                     if (config.map[i][j] !== 'c') config.map[i][j] = block;
                 }
@@ -152,7 +155,7 @@ Property.prototype = {
                 requestAnimationFrame(swap.bind(self));
                 return;
             }
-            if (tick / 60 >= duration) {
+            if (self.isDestroyed || tick / 60 >= duration) {
                 setFence('3');
                 return;
             }
@@ -175,10 +178,10 @@ Property.prototype = {
         if (this.isEatten) return;
         this.isEatten = true;
         sound(avEat);
-        this.ctx.drawImage(imgScore500, this.x + this.size / 2 + 32, this.y - this.size + 32, 32, 32);
+        this.ctx.drawImage(imgScore500, this.x + this.size / 2 + 16, this.y - this.size + 16, 16, 16);
         var self = this;
         setTimeout(function () {
-            self.ctx.clearRect(self.x + self.size / 2 + 32, self.y - self.size + 32, 32, 32);
+            self.ctx.clearRect(self.x + self.size / 2 + 16, self.y - self.size + 16, 16, 16);
         }, 1500);
         config.playerScore += 500;
         // TODO 奖励eatten
@@ -190,7 +193,6 @@ Property.prototype = {
                 showPlayerCount(config.lives);
                 break;
             case 2: // star
-                console.log('upgrade');
                 config.player.upgrade();
                 break;
             case 3: // clock

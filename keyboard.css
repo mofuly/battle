@@ -2,10 +2,11 @@
     margin: 0;
     padding: 0;
     position: absolute;
-    bottom: 1vh;
+    top: 280px;
     right: 0;
-    width: 100vw;
-    height: 30vh;
+    width: 100%;
+    height: 150px;
+    -webkit-touch-callout: none;
 }
 
 #L,
@@ -13,13 +14,13 @@
 #Space,
 #Control {
     position: absolute;
-    bottom: 6vh;
-    width: 8vh;
-    height: 8vh;
+    bottom: 10px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background-color: red;
-    font-size: 7vh;
-    line-height: 8vh;
+    font-size: 38px;
+    line-height: 40px;
     text-align: center;
 }
 
@@ -41,62 +42,45 @@
 }
 
 #Space {
-    left: 8vh;
+    left: 20px;
 }
 
 #Control {
-    left: 24vh;
+    left: 80px;
 }
 
 #ArrowLeft,
 #ArrowRight,
 #ArrowUp,
-#ArrowDown {
-    position: absolute;
-    height: 8vh;
-    width: 8vh;
-    font-size: 8vh;
-    line-height: 8vh;
-    bottom: 6vh;
-}
-
+#ArrowDown,
 #Pause {
     position: absolute;
-    display: inline-block;
-    left: 8vh;
-    bottom: 20vh;
-    width: 2vh;
-    height: 7vh;
-    border-left: 3vh black solid;
-    border-right: 3vh black solid;
-    /* background-color: rgb(100, 130, 156);
-    color: white; */
+    height: 40px;
+    width: 40px;
+    font-size: 38px;
+    line-height: 40px;
+    bottom: 10px;
 }
 
-#Pause.Resume {
-    position: absolute;
-    display: inline-block;
-    left: 8vh;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-color: transparent transparent transparent black;
-    border-width: 4vh;
-}
 
 #ArrowRight {
-    right: 8vh;
+    left: 260px;
 }
 
 #ArrowDown {
-    right: 18vh;
+    left: 200px;
 }
 
 #ArrowLeft {
-    right: 28vh;
+    left: 140px;
 }
 
 #ArrowUp {
-    right: 18vh;
-    bottom: 18vh;
+    left: 200px;
+    bottom: 70px;
+}
+
+#Pause {
+    left: 60px;
+    bottom: 70px;
 }

@@ -16,7 +16,7 @@ function Tank(type, grade) {
         this.dir = 3;
         this.isBorning = true;
     }
-    this.size = 32;
+    this.size = 16;
     this.isPaused = false;
     this.tick = 0;
     this.isMoving = false;
@@ -32,7 +32,7 @@ function Tank(type, grade) {
     this.speed = 3;
     this.ctx = canvasPlayer.getContext('2d');
     if (type === 'enemy' && grade === 2) { // enemy rapid
-        this.speed = 2;
+        this.speed = 1;
         this.ctx = canvasEnemy.getContext('2d');
     }
     this.isWearingShield = false;
@@ -41,9 +41,9 @@ function Tank(type, grade) {
     this.isEatting = false;
     this.lastFireTime = null;
 }
-Tank.playerX = 8 * 16;
-Tank.playerY = 24 * 16;
-Tank.enemyX = [0, 24 * 16, 12 * 16];
+Tank.playerX = 8 * 8;
+Tank.playerY = 24 * 8;
+Tank.enemyX = [0, 24 * 8, 12 * 8];
 
 Tank.prototype = {
     constructor: Tank,
@@ -63,8 +63,8 @@ Tank.prototype = {
         }
     },
     get head() {
-        var row = Math.floor(this.y / 16),
-            col = Math.floor(this.x / 16);
+        var row = Math.floor(this.y / 8),
+            col = Math.floor(this.x / 8);
         switch (this.dir) {
             case 0: // left
                 return [{
@@ -101,8 +101,8 @@ Tank.prototype = {
         }
     },
     get ahead() {
-        var row = Math.floor(this.y / 16),
-            col = Math.floor(this.x / 16);
+        var row = Math.floor(this.y / 8),
+            col = Math.floor(this.x / 8);
         switch (this.dir) {
             case 0: // left
                 return [{
@@ -143,25 +143,25 @@ Tank.prototype = {
     // 未判断是否越界 和 前方是否有障碍物
     get aheadPoint() {
         if (this.dir === 0) return {
-            x: this.x - 16,
+            x: this.x - 8,
             y: this.y
         };
         if (this.dir === 1) return {
             x: this.x,
-            y: this.y - 16
+            y: this.y - 8
         };
         if (this.dir === 2) return {
-            x: this.x + 16,
+            x: this.x + 8,
             y: this.y
         };
         if (this.dir === 3) return {
             x: this.x,
-            y: this.y + 16
+            y: this.y + 8
         };
     },
     get location() {
-        let row = Math.floor(this.y / 16),
-            col = Math.floor(this.x / 16);
+        let row = Math.floor(this.y / 8),
+            col = Math.floor(this.x / 8);
 
         return [{
                 row: row,
@@ -184,7 +184,7 @@ Tank.prototype = {
 
     // 清除图片
     clear: function () {
-        this.ctx.clearRect(this.x + 32, this.y + 32, this.size, this.size);
+        this.ctx.clearRect(this.x + 16, this.y + 16, this.size, this.size);
     },
 
     // 显示坦克
@@ -193,7 +193,7 @@ Tank.prototype = {
         var el = document.getElementById(this.id);
         if (el) {
             this.clear();
-            this.ctx.drawImage(el, this.x + 32, this.y + 32, this.size, this.size);
+            this.ctx.drawImage(el, this.x + 16, this.y + 16, this.size, this.size);
         }
     },
     setProperty: function (prop) {
@@ -210,9 +210,9 @@ Tank.prototype = {
     // 越界检测
     get isOverBorder() {
         return this.aheadPoint.x < 0 ||
-            this.aheadPoint.x + this.size > 416 ||
+            this.aheadPoint.x + this.size > 208 ||
             this.aheadPoint.y < 0 ||
-            this.aheadPoint.y + this.size > 416;
+            this.aheadPoint.y + this.size > 208;
     },
     // 前方是否有障碍
     get hasObstacleAhead() {
@@ -294,8 +294,8 @@ Tank.prototype = {
             if (self.tick % self.speed === mod) {
                 loop++;
                 self.clear();
-                self.x += (16 / times) * factorX;
-                self.y += (16 / times) * factorY;
+                self.x += (8 / times) * factorX;
+                self.y += (8 / times) * factorY;
                 self.show();
             }
             self.tick++;
@@ -361,17 +361,17 @@ Tank.prototype = {
                     return;
                 }
                 if (tick > duration) {
-                    canvasShield.getContext('2d').clearRect(x + 32, y + 32, size, size);
+                    canvasShield.getContext('2d').clearRect(x + 16, y + 16, size, size);
                     self.isWearingShield = false;
                     return;
                 }
                 if (tick % period === 0) {
-                    canvasShield.getContext('2d').clearRect(x + 32, y + 32, size, size);
+                    canvasShield.getContext('2d').clearRect(x + 16, y + 16, size, size);
                     x = self.x, y = self.y;
                     if (isToggle) {
-                        canvasShield.getContext('2d').drawImage(imgShield0, self.x + 32, self.y + 32, self.size, self.size);
+                        canvasShield.getContext('2d').drawImage(imgShield0, self.x + 16, self.y + 16, self.size, self.size);
                     } else {
-                        canvasShield.getContext('2d').drawImage(imgShield1, self.x + 32, self.y + 32, self.size, self.size);
+                        canvasShield.getContext('2d').drawImage(imgShield1, self.x + 16, self.y + 16, self.size, self.size);
                     }
                     isToggle = !isToggle;
                 }
@@ -553,7 +553,7 @@ Tank.prototype = {
                     if (self.dir === 2) self.right();
                     if (self.dir === 3) self.down();
                 }
-                if (genRandom(0, 99) > 85) self.shoot();
+                if (!config.isDebugging && genRandom(0, 99) > 85) self.shoot();
             }
             tick++;
             requestAnimationFrame(autoDrive);

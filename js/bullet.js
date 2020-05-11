@@ -1,22 +1,22 @@
 function Bullet(owner) {
     switch (owner.dir) {
         case 0: // left
-            this.x = Math.max(0, owner.x - 6);
-            this.y = owner.y + 12;
+            this.x = Math.max(0, owner.x - 3);
+            this.y = owner.y + 6;
             break;
         case 1: // up
-            this.x = owner.x + 12;
-            this.y = Math.max(0, owner.y - 6);
+            this.x = owner.x + 6;
+            this.y = Math.max(0, owner.y - 3);
             break;
         case 2: // right
-            this.x = Math.min(416, owner.x + owner.size + 6);
-            this.y = owner.y + 12;
+            this.x = Math.min(208, owner.x + owner.size + 3);
+            this.y = owner.y + 6;
             break;
         case 3: // down
-            this.x = owner.x + 12;
-            this.y = Math.min(416, owner.y + owner.size + 6);
+            this.x = owner.x + 6;
+            this.y = Math.min(208, owner.y + owner.size + 3);
     }
-    this.size = 8;
+    this.size = 4;
     this.owner = owner;
     this.dir = owner.dir;
     this.grade = 1;
@@ -38,7 +38,7 @@ Bullet.prototype = {
         var id = 'imgBullet' + this.dir,
             imgBullet = document.getElementById(id);
         // this.clear();
-        this.ctx.drawImage(imgBullet, this.x + 32, this.y + 32, this.size, this.size);
+        this.ctx.drawImage(imgBullet, this.x + 16, this.y + 16, this.size, this.size);
     },
 
     touchBorder: function () {
@@ -48,14 +48,14 @@ Bullet.prototype = {
             case 1: // up
                 return this.y <= 0;
             case 2: // right
-                return this.x >= 408 + 8;
+                return this.x >= 208;
             case 3: // down
-                return this.y >= 408 + 8;
+                return this.y >= 208;
         }
         return false;
     },
     clear: function () {
-        this.ctx.clearRect(this.x + 32, this.y + 32, this.size, this.size);
+        this.ctx.clearRect(this.x + 16, this.y + 16, this.size, this.size);
     },
     pause: function () {
         this.isPaused = !this.isPaused;
@@ -106,15 +106,18 @@ Bullet.prototype = {
             if (bullet === this) continue;
             if (bullet.owner === this.owner) continue;
             if (bullet.dir === this.dir) continue;
-            if (collide(this.x, this.y, this.size, this.size, bullet.x, bullet.y, bullet.size, bullet.size)) {
-                bullet.destroy(false);
-                for (var j = 0; j < config.bullet.length; j++) {
-                    if (config.bullet[j] === this) {
-                        this.destroy(false);
-                        break;
+            if (bullet.isDestroyed) continue;
+            if (this.owner.type === 'player' || bullet.owner.type === 'player') {
+                if (collide(this.x, this.y, this.size, this.size, bullet.x, bullet.y, bullet.size, bullet.size)) {
+                    bullet.destroy(false);
+                    for (var j = 0; j < config.bullet.length; j++) {
+                        if (config.bullet[j] === this) {
+                            this.destroy(false);
+                            break;
+                        }
                     }
+                    return;
                 }
-                return;
             }
         }
 
@@ -125,7 +128,7 @@ Bullet.prototype = {
         }
 
         // hits camp or not
-        if (collide(this.x, this.y, this.size, this.size, 12 * 16, 24 * 16, 16, 16)) {
+        if (collide(this.x, this.y, this.size, this.size, 12 * 8, 24 * 8, 16, 16)) {
             showCamp(false);
             this.destroy();
             battle.gameOver();
@@ -145,6 +148,7 @@ Bullet.prototype = {
                 return;
             }
         } else { // bullet of enemies
+            if (config.player == null || config.player.isDestroyed) return;
             if (collide(this.x, this.y, this.size, this.size, config.player.x, config.player.y, config.player.size, config.player.size)) {
                 var isEffective = config.player.hit();
                 this.destroy(isEffective);
@@ -154,27 +158,27 @@ Bullet.prototype = {
         this.clear();
         switch (this.dir) {
             case 0: // left
-                this.x -= 8;
+                this.x -= 4;
                 break;
             case 1: // up
-                this.y -= 8;
+                this.y -= 4;
                 break;
             case 2: // right
-                this.x += 8;
+                this.x += 4;
                 break;
             case 3: // down
-                this.y += 8;
+                this.y += 4;
                 break;
         }
-        this.show();
+        if (!this.isDestroyed) this.show();
         requestAnimationFrame(this.fly.bind(this));
     },
 
     hitSomething: function () {
         var row, col, block1, block2, row1, row2, col1, col2;
 
-        row = Math.floor(this.y / 16);
-        col = Math.floor(this.x / 16);
+        row = Math.floor(this.y / 8);
+        col = Math.floor(this.x / 8);
         switch (this.dir) {
             case 0: // left
                 row1 = row, col1 = col;
@@ -201,12 +205,12 @@ Bullet.prototype = {
         if (this.grade > 3) {
             if (this.isShootable(block1)) {
                 config.map[row1][col1] = '0';
-                this.ctxMap.clearRect(col1 * 16 + 32, row1 * 16 + 32, 16, 16);
+                this.ctxMap.clearRect(col1 * 8 + 16, row1 * 8 + 16, 8, 8);
                 shot = true;
             }
             if (this.isShootable(block2)) {
                 config.map[row2][col2] = '0';
-                this.ctxMap.clearRect(col2 * 16 + 32, row2 * 16 + 32, 16, 16);
+                this.ctxMap.clearRect(col2 * 8 + 16, row2 * 8 + 16, 8, 8);
                 shot = true;
             }
             return shot;
@@ -238,35 +242,35 @@ Bullet.prototype = {
         switch (this.dir) {
             case 0: // left
             case 2: // right
-                if (this.x % 16 <= 8) { //子弹在左半边
+                if (this.x % 8 <= 4) { //子弹在左半边
                     if (config.piece[index][0] === 1) {
-                        x = col * 16, y = row * 16;
-                        isHit = collide(this.x, this.y, 8, 8, x, y, 8, 8);
+                        x = col * 8, y = row * 8;
+                        isHit = collide(this.x, this.y, 4, 4, x, y, 4, 4);
                     }
                     if (!isHit) {
                         if (config.piece[index][2] === 1) {
-                            x = col * 16, y = row * 16 + 8;
-                            isHit = collide(this.x, this.y, 8, 8, x, y, 8, 8);
+                            x = col * 8, y = row * 8 + 4;
+                            isHit = collide(this.x, this.y, 4, 4, x, y, 4, 4);
                         }
                     }
                     if (isHit) {
-                        this.ctxMap.clearRect(col * 16 + 32, row * 16 + 32, 8, 16);
+                        this.ctxMap.clearRect(col * 8 + 16, row * 8 + 16, 4, 8);
                         config.piece[index][0] = 0;
                         config.piece[index][2] = 0;
                     }
                 } else { // 子弹在右半边
                     if (config.piece[index][1] === 1) {
-                        x = col * 16 + 8, y = row * 16;
-                        isHit = collide(this.x, this.y, 8, 8, x, y, 8, 8);
+                        x = col * 8 + 4, y = row * 8;
+                        isHit = collide(this.x, this.y, 4, 4, x, y, 4, 4);
                     }
                     if (!isHit) {
                         if (config.piece[index][3] === 1) {
-                            x = col * 16 + 8, y = row * 16 + 8;
-                            isHit = collide(this.x, this.y, 8, 8, x, y, 8, 8);
+                            x = col * 8 + 4, y = row * 8 + 4;
+                            isHit = collide(this.x, this.y, 4, 4, x, y, 4, 4);
                         }
                     }
                     if (isHit) {
-                        this.ctxMap.clearRect(col * 16 + 8 + 32, row * 16 + 32, 8, 16);
+                        this.ctxMap.clearRect(col * 8 + 4 + 16, row * 8 + 16, 4, 8);
                         config.piece[index][1] = 0;
                         config.piece[index][3] = 0;
                     }
@@ -274,35 +278,35 @@ Bullet.prototype = {
                 break;
             case 1: // up
             case 3: // down
-                if (this.y % 16 <= 8) { //子弹在上半部
+                if (this.y % 8 <= 4) { //子弹在上半部
                     if (config.piece[index][0] === 1) {
-                        x = col * 16, y = row * 16;
-                        isHit = collide(this.x, this.y, 8, 8, x, y, 8, 8);
+                        x = col * 8, y = row * 8;
+                        isHit = collide(this.x, this.y, 4, 4, x, y, 4, 4);
                     }
                     if (!isHit) {
                         if (config.piece[index][1] === 1) {
-                            x = col * 16 + 8, y = row * 16;
-                            isHit = collide(this.x, this.y, 8, 8, x, y, 8, 8);
+                            x = col * 8 + 4, y = row * 8;
+                            isHit = collide(this.x, this.y, 4, 4, x, y, 4, 4);
                         }
                     }
                     if (isHit) {
-                        this.ctxMap.clearRect(col * 16 + 32, row * 16 + 32, 16, 8);
+                        this.ctxMap.clearRect(col * 8 + 16, row * 8 + 16, 8, 4);
                         config.piece[index][0] = 0;
                         config.piece[index][1] = 0;
                     }
                 } else { // 子弹在下半部
                     if (config.piece[index][2] === 1) {
-                        x = col * 16, y = row * 16 + 8;
-                        isHit = collide(this.x, this.y, this.size, this.size, x, y, 8, 8);
+                        x = col * 8, y = row * 8 + 4;
+                        isHit = collide(this.x, this.y, this.size, this.size, x, y, 4, 4);
                     }
                     if (!isHit) {
                         if (config.piece[index][3] === 1) {
-                            x = col * 16 + 8, y = row * 16 + 8;
-                            isHit = collide(this.x, this.y, 8, 8, x, y, 8, 8);
+                            x = col * 8 + 8, y = row * 8 + 4;
+                            isHit = collide(this.x, this.y, 4, 4, x, y, 4, 4);
                         }
                     }
                     if (isHit) {
-                        this.ctxMap.clearRect(col * 16 + 32, row * 16 + 8 + 32, 16, 8);
+                        this.ctxMap.clearRect(col * 8 + 16, row * 8 + 4 + 16, 8, 4);
                         config.piece[index][2] = 0;
                         config.piece[index][3] = 0;
                     }

@@ -5,7 +5,7 @@ config = {
     stage: 1,
     lives: 3,
     mostOfEnemy: 1,
-    fireSpeed: 250,
+    fireSpeed: 800,
     player: null,
     map: [],
     piece: {},

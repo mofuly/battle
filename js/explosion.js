@@ -14,13 +14,13 @@ function Explosion(which) { // which: bullet,enemy or player
         }
     }
     if (this.isBig) {
-        this.x = which.x + 24;
-        this.y = which.y + 24;
+        this.x = which.x + 12;
+        this.y = which.y + 12;
         this.size = 32;
     } else {
-        this.x = which.x + 28;
-        this.y = which.y + 32;
-        this.size = 16;
+        this.x = which.x + 14;
+        this.y = which.y + 16;
+        this.size = 8;
     }
     this.ctx = canvasExplosion.getContext('2d');
     this.tick = 0;

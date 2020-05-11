@@ -1029,10 +1029,10 @@ function showCamp(alive) {
         config.map[24][13] = 'c';
         config.map[25][12] = 'c';
         config.map[25][13] = 'c';
-        canvasMap.getContext('2d').drawImage(camps[0], 12 * 16 + 32, 24 * 16 + 32, 32, 32);
+        canvasMap.getContext('2d').drawImage(camps[0], 12 * 8 + 16, 24 * 8 + 16, 16, 16);
     } else {
-        canvasMap.getContext('2d').clearRect(12 * 16 + 32, 24 * 16 + 32, 32, 32);
-        canvasMap.getContext('2d').drawImage(camps[1], 12 * 16 + 32, 24 * 16 + 32, 32, 32);
+        canvasMap.getContext('2d').clearRect(12 * 8 + 16, 24 * 8 + 16, 16, 16);
+        canvasMap.getContext('2d').drawImage(camps[1], 12 * 8 + 16, 24 * 8 + 16, 16, 16);
         sound(avCampBoom);
     }
 }
@@ -1042,27 +1042,27 @@ function showMap() {
     ctxMap = canvasMap.getContext('2d');
     ctxGrass = canvasGrass.getContext('2d');
 
-    ctxMap.clearRect(0, 0, 511, 479);
-    ctxGrass.clearRect(0, 0, 511, 479);
+    ctxMap.clearRect(0, 0, 255, 239);
+    ctxGrass.clearRect(0, 0, 255, 239);
 
     stage = config.stage - 1;
     loadMap(stage);
     for (var i = 0; i < 26; i++) {
-        y = i * 16 + 32;
+        y = i * 8 + 16;
         for (var j = 0; j < 26; j++) {
-            x = j * 16 + 32;
+            x = j * 8 + 16;
             switch (config.map[i][j]) {
                 case '1': // grass
-                    ctxGrass.drawImage(imgGrass, x, y, 16, 16);
+                    ctxGrass.drawImage(imgGrass, x, y, 8, 8);
                     break;
                 case '3': // brick
-                    ctxMap.drawImage(imgBrick, x, y, 16, 16);
+                    ctxMap.drawImage(imgBrick, x, y, 8, 8);
                     break;
                 case '4': // river
-                    ctxMap.drawImage(imgRiver, x, y, 16, 16);
+                    ctxMap.drawImage(imgRiver, x, y, 8, 8);
                     break;
                 case '5': // steel
-                    ctxMap.drawImage(imgSteel, x, y, 16, 16);
+                    ctxMap.drawImage(imgSteel, x, y, 8, 8);
                     break;
             }
         }
@@ -1070,9 +1070,9 @@ function showMap() {
 
     showCamp(true);
 
-    ctxMap.drawImage(document.getElementById('img1p'), 29 * 16, 17 * 16, 32, 16);
-    ctxMap.drawImage(document.getElementById('imgPlayerIco'), 29 * 16, 18 * 16, 16, 16);
-    ctxMap.drawImage(document.getElementById('imgFlag'), 29 * 16, 22 * 16, 32, 32);
+    ctxMap.drawImage(document.getElementById('img1p'), 29 * 8, 17 * 8, 16, 8);
+    ctxMap.drawImage(document.getElementById('imgPlayerIco'), 29 * 8, 18 * 8, 8, 8);
+    ctxMap.drawImage(document.getElementById('imgFlag'), 29 * 8, 22 * 8, 16, 16);
 
     showPlayerCount(config.lives);
     showStageNo(stage + 1);
@@ -1130,19 +1130,19 @@ function drawEnemyIcon(no) {
     var row = Math.floor(no / 2),
         col = no % 2;
     var img = document.getElementById('imgEnemyIco');
-    var x = 29 * 16,
-        y = 3 * 16;
+    var x = 29 * 8,
+        y = 3 * 8;
 
-    canvasMap.getContext('2d').drawImage(img, x + col * 16, y + row * 16, 16, 16);
+    canvasMap.getContext('2d').drawImage(img, x + col * 8, y + row * 8, 8, 8);
 }
 
 function clearEnemyIcon(no) {
     var row = Math.floor(no / 2),
         col = no % 2,
-        x = 29 * 16,
-        y = 3 * 16;
+        x = 29 * 8,
+        y = 3 * 8;
 
-    canvasMap.getContext('2d').clearRect(x + col * 16, y + row * 16, 16, 16);
+    canvasMap.getContext('2d').clearRect(x + col * 8, y + row * 8, 8, 8);
 }
 
 function drawAllEnemyIcon() {

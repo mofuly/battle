@@ -17,72 +17,76 @@
 .canvas-shield,
 .panel-common,
 .panel-cover {
-    width: 512px;
-    height: 480px;
+    width: 256px;
+    height: 240px;
     position: absolute;
 }
 
+.panel-resource {
+    display: none;
+}
+
 .main {
-    width: 512px;
-    height: 480px;
+    width: 256px;
+    height: 240px;
     margin: 0 auto;
-    margin-top: 8px;
+    margin-top: 4px;
 }
 
 .panel-background {
     background-color: black;
     box-sizing: border-box;
-    border: 32px solid grey;
-    border-right-width: 16px;
+    border: 16px solid grey;
+    border-right-width: 8px;
 }
 
 .panel-background>.vline {
     position: absolute;
-    height: 442px;
-    width: 48px;
+    height: 221px;
+    width: 24px;
     right: 0;
     background-color: grey;
 }
 
 .panel-cover {
     box-sizing: border-box;
-    font-size: 12px;
+    font-size: 6px;
     color: rgb(88, 88, 88);
     text-align: right;
-    padding-top: 460px;
-    padding-right: 8px;
+    padding-top: 224px;
+    padding-right: 2px;
 }
 
 #playerCount,
 #stageNo {
     position: absolute;
-    height: 16px;
+    height: 8px;
     display: inline-block;
     text-align: right;
-    line-height: 16px;
+    line-height: 8px;
     color: black;
-    right: 16px;
-    font-size: 16px;
+    right: 8px;
+    font-size: 8px;
     font-weight: bolder;
 }
 
 #playerCount {
-    width: 16px;
-    top: 288px;
+    width: 8px;
+    top: 144px;
 }
 
 #stageNo {
-    width: 32px;
-    height: 32px;
-    top: 390px;
-    font-size: 32px;
-    line-height: 32px;
+    width: 16px;
+    height: 16px;
+    top: 195px;
+    font-size: 16px;
+    line-height: 16px;
 }
 
 .welcome {
     position: absolute;
-    width: calc(512px);
-    height: calc(480px);
+    width: 256px;
+    height: 240px;
     background-image: url('./res/select_player.gif');
     background-repeat: no-repeat;
     background-size: 100%;
@@ -96,10 +100,10 @@
 .transparent-message,
 .message {
     position: absolute;
-    width: 512px;
-    height: 480px;
-    font-size: 56px;
-    line-height: 480px;
+    width: 256px;
+    height: 240px;
+    font-size: 28px;
+    line-height: 240px;
     text-align: center;
     color: red;
     background-color: rgba(0, 0, 0, 0.6);
@@ -112,9 +116,9 @@
 
 .gameover {
     position: absolute;
-    width: 124px;
-    height: 80px;
-    left: 146px;
+    width: 62px;
+    height: 40px;
+    left: 73px;
     background-repeat: no-repeat;
 }
 
@@ -127,18 +131,19 @@
     background-image: url('res/0Player/m1-3-1.gif');
     background-size: 100%;
     background-repeat: no-repeat;
-    width: 32px;
-    height: 32px;
-    top: 244px;
-    left: 140px;
+    width: 16px;
+    height: 16px;
+    top: 122px;
+    left: 70px;
 }
 
 #menuDescription {
     position: absolute;
-    height: 16px;
-    font-size: 16px;
+    height: 8px;
+    width: 248px;
+    font-size: 6px;
     text-align: center;
-    bottom: 8px;
-    left: 60px;
+    bottom: 122px;
+    left: 10px;
     color: white;
 }

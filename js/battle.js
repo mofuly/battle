@@ -93,24 +93,25 @@ Battle.prototype = {
             function twinkle() {
                 if (baby) {
                     if (baby.isDestroyed) {
-                        ctx.clearRect(x + 32, 32, 32, 32);
+                        ctx.clearRect(x + 16, 16, 16, 16);
                         config.isEnemyBorning = false;
                         return;
                     }
                 }
                 if (times === -1) {
-                    ctx.clearRect(x + 32, 32, 32, 32);
+                    ctx.clearRect(x + 16, 16, 16, 16);
                     if (!baby.isDestroyed) baby.show();
                     config.isEnemyBorning = false;
                     baby.isBorning = false;
+                    baby.isPaused = config.isPaused;
                     baby.show();
                     baby.go();
                     // console.log('times === -1', config.isEnemyBorning)
                     return;
                 }
                 if (config.tick % period === mod) {
-                    ctx.clearRect(x + 32, 32, 32, 32);
-                    ctx.drawImage(imgs[currentIndex], x + 32, 32, 32, 32);
+                    ctx.clearRect(x + 16, 16, 16, 16);
+                    ctx.drawImage(imgs[currentIndex], x + 16, 16, 16, 16);
                     currentIndex++;
                     if (currentIndex === imgs.length) {
                         currentIndex = 0;
@@ -160,6 +161,15 @@ Battle.prototype = {
 
         panel.panelCommon.innerHTML = '';
 
+        config.property.forEach(function (v) {
+            v.isDestroyed = true;
+        });
+        config.bullet.forEach(function (v) {
+            v.isDestroyed = true;
+        });
+        config.enemy.forEach(function (v) {
+            v.isDestroyed = true;
+        });
         config.piece = {};
         config.property = [];
         config.bullet = [];
@@ -177,24 +187,39 @@ Battle.prototype = {
         config.isDelayForScore = false;
         config.isGameOver = false;
 
-        canvasMap.getContext('2d').clearRect(0, 0, 511, 479);
-        canvasGrass.getContext('2d').clearRect(0, 0, 511, 479);
-        canvasEnemy.getContext('2d').clearRect(0, 0, 511, 479);
-        canvasPlayer.getContext('2d').clearRect(0, 0, 511, 479);
-        canvasProperty.getContext('2d').clearRect(0, 0, 511, 479);
-        canvasExplosion.getContext('2d').clearRect(0, 0, 511, 479);
-        canvasBullet.getContext('2d').clearRect(0, 0, 511, 479);
-        canvasShield.getContext('2d').clearRect(0, 0, 511, 479);
+        canvasMap.getContext('2d').clearRect(0, 0, 255, 239);
+        canvasGrass.getContext('2d').clearRect(0, 0, 255, 239);
+        canvasEnemy.getContext('2d').clearRect(0, 0, 255, 239);
+        canvasPlayer.getContext('2d').clearRect(0, 0, 255, 239);
+        canvasProperty.getContext('2d').clearRect(0, 0, 255, 239);
+        canvasExplosion.getContext('2d').clearRect(0, 0, 255, 239);
+        canvasBullet.getContext('2d').clearRect(0, 0, 255, 239);
+        canvasShield.getContext('2d').clearRect(0, 0, 255, 239);
 
         showMap();
 
         // generate enemy queue
-        var queueIndex = Math.min(config.stage - 1, ENEMY_QUEUE.length - 1);
-        for (var i = 0; i < ENEMY_QUEUE[queueIndex].type.length; i++) {
+        // var queueIndex = Math.min(config.stage - 1, ENEMY_QUEUE.length - 1);
+        // for (var i = 0; i < ENEMY_QUEUE[queueIndex].type.length; i++) {
+        //     config.enemyQueue.push({
+        //         type: parseInt(ENEMY_QUEUE[queueIndex].type.substr(i, 1)),
+        //         prop: parseInt(ENEMY_QUEUE[queueIndex].prop.substr(i, 1))
+        //     });
+        // }
+        for (var i = 0; i < 20; i++) {
+            var enemyType = genRandom(1, 7);
             config.enemyQueue.push({
-                type: parseInt(ENEMY_QUEUE[queueIndex].type.substr(i, 1)),
-                prop: parseInt(ENEMY_QUEUE[queueIndex].prop.substr(i, 1))
+                type: enemyType,
+                prop: -1
             });
+        }
+        for (var i = 0; i < 3; i++) {
+            var property = genRandom(1, 6);
+            var index;
+            do {
+                index = genRandom(0, 19);
+            } while (config.enemyQueue[index].prop >= 0)
+            config.enemyQueue[index].prop = property;
         }
         this.newPlayer();
         drawAllEnemyIcon();
@@ -228,8 +253,8 @@ Battle.prototype = {
         }
 
         if (config.currentPanel === this.PanelWelcome) {
-            var x = 140,
-                y = 244,
+            var x = 70,
+                y = 124,
                 el = document.getElementById("menuSelected");
 
             if (config.key.ArrowUp) {
@@ -242,24 +267,20 @@ Battle.prototype = {
             }
             switch (this.menuSelected) {
                 case 1:
-                    y = 244;
+                    y = 124;
                     break;
                 case 2:
-                    y = 276;
+                    y = 138;
                     break;
                 case 3:
-                    y = 308;
+                    y = 154;
                     break;
             }
             var style = "top:" + y + "px;left:" + x + "px;";
             if (el) el.style = style;
 
             if (config.key.Control || config.key.Space) {
-                if (config.isDebugging) {
-                    config.mostOfEnemy = 1;
-                } else {
-                    config.mostOfEnemy = this.menuSelected * 2 + 2;
-                }
+                config.mostOfEnemy = this.menuSelected * 2 + 2;
                 this.showStage();
                 return;
             }
@@ -318,7 +339,7 @@ Battle.prototype = {
     showWelcome: function () {
         config.currentPanel = this.PanelWelcome;
         config.key = {};
-        var style, y = 480,
+        var style, y = 240,
             id = 'wel-01';
         var html = `<div id="${id}" class="welcome"></div>`;
         var panelCommon = document.getElementById('panelCommon');
@@ -332,7 +353,7 @@ Battle.prototype = {
             if (y === 0) {
                 var elPoint = document.getElementById('wel-01');
                 if (elPoint) elPoint.innerHTML = '<div id="menuSelected" class="menu-tank"></div>';
-                if (elPoint) elPoint.innerHTML += '<div id="menuDescription">3个选项分别表示战场中坦克的数量为4，6，8</div>';
+                if (elPoint) elPoint.innerHTML += '<div id="menuDescription">选项表示战斗中坦克的数量为4，6，8</div > ';
                 return;
             }
             y -= 4;
@@ -373,16 +394,16 @@ Battle.prototype = {
         var html = '<img id="gameover-img" class="gameover" src="./res/big-gameover.gif">';
         panel.panelCommon.innerHTML = html;
         panel.panelCommon.className = 'panel-common half-transparent';
-        var y = 400,
+        var y = 200,
             el = document.getElementById("gameover-img");
 
         animation();
 
         function animation() {
             y -= 3;
-            if (y <= 184) return;
+            if (y <= 92) return;
 
-            var style = "left:180px;top:" + y + "px;";
+            var style = "left:90px;top:" + y + "px;";
             el.style = style;
 
             requestAnimationFrame(animation);
@@ -493,8 +514,8 @@ Battle.prototype = {
     },
 
     init: function () {
-        var w = 512,
-            h = 480;
+        var w = 256,
+            h = 240;
 
         canvasMap.width = w;
         canvasMap.height = h;

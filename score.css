@@ -20,66 +20,66 @@ div.panel-score {
 
 .panel-score>.point1,
 .panel-score>.point2 {
-    width: 190px;
-    height: 164px;
+    width: 95px;
+    height: 82px;
 }
 
 .panel-score>.point1 {
-    left: 40px;
-    top: 188px;
+    left: 20px;
+    top: 94px;
     background-image: url(./res/scorepanel/point1.gif);
 }
 
 .panel-score>.point2 {
-    left: 284px;
-    top: 188px;
+    left: 142px;
+    top: 94px;
     background-image: url(./res/scorepanel/point2.gif);
 }
 
 .panel-score>.player1,
 .panel-score>.player2 {
-    width: 124px;
-    height: 14px;
+    width: 62px;
+    height: 7px;
 }
 
 .panel-score>.player1 {
-    left: 80px;
-    top: 160px;
+    left: 40px;
+    top: 80px;
     background-image: url(./res/scorepanel/player1.gif);
 }
 
 .panel-score>.player2 {
-    left: 300px;
-    top: 160px;
+    left: 150px;
+    top: 80px;
     background-image: url(./res/scorepanel/player2.gif);
 }
 
 .panel-score>.hi-score {
     position: absolute;
-    left: 272px;
-    top: 40px;
+    left: 136px;
+    top: 20px;
     color: red;
-    font-size: 22px;
+    font-size: 11px;
     font-weight: bolder;
-    width: 220px;
+    width: 110px;
 }
 
 .panel-score>.stage {
     position: absolute;
-    left: 280px;
-    top: 72px;
+    left: 140px;
+    top: 36px;
     color: white;
-    font-size: 20px;
+    font-size: 10px;
     font-weight: bolder;
-    width: 200px;
+    width: 100px;
 }
 
 .panel-score>.bonus {
-    width: 126px;
-    height: 30px;
+    width: 63px;
+    height: 15px;
     background-image: url(./res/scorepanel/bunds.gif);
-    left: 60px;
-    top: 110px;
+    left: 30px;
+    top: 55px;
 }
 
 .panel-score>.normal-count,
@@ -88,14 +88,14 @@ div.panel-score {
 .panel-score>.heavy-count,
 .panel-score>.total-count {
     position: absolute;
-    width: 44px;
-    height: 22px;
-    font-size: 22px;
+    width: 22px;
+    height: 11px;
+    font-size: 11px;
     color: white;
     text-align: right;
     font-weight: bolder;
-    line-height: 22px;
-    left: 170px;
+    line-height: 11px;
+    left: 85px;
 }
 
 .panel-score>.normal-p1,
@@ -104,37 +104,37 @@ div.panel-score {
 .panel-score>.heavy-p1,
 .panel-score>.total-p1 {
     position: absolute;
-    width: 100px;
-    height: 22px;
-    font-size: 22px;
+    width: 50px;
+    height: 11px;
+    font-size: 11px;
     color: white;
     text-align: right;
     font-weight: bolder;
-    line-height: 22px;
+    line-height: 11px;
     left: 0;
 }
 
 .panel-score>.normal-count,
 .panel-score>.normal-p1 {
-    top: 190px;
+    top: 95px;
 }
 
 .panel-score>.rapid-count,
 .panel-score>.rapid-p1 {
-    top: 238px;
+    top: 119px;
 }
 
 .panel-score>.medium-count,
 .panel-score>.medium-p1 {
-    top: 286px;
+    top: 143px;
 }
 
 .panel-score>.heavy-count,
 .panel-score>.heavy-p1 {
-    top: 334px;
+    top: 167px;
 }
 
 .panel-score>.total-count,
 .panel-score>.total-p1 {
-    top: 390px;
+    top: 195px;
 }
